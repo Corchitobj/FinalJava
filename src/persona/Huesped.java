@@ -1,0 +1,48 @@
+package persona;
+
+import hotel.Reserva;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Huesped extends Persona {
+    private List<Reserva> reservas = new ArrayList<>();
+
+    public Huesped(String nombre, String apellido, String dni) {
+        super(nombre, apellido, dni);
+    }
+    
+    // Getters y Setters
+    public List<Reserva> getReservas() { return reservas; }
+    public void setReservas(List<Reserva> reservas) { this.reservas = reservas; }
+
+
+    // Métodos para gestionar reservas
+    public void agregarReserva(Reserva reserva) {
+        reservas.add(reserva);
+    }
+
+    public boolean eliminarReserva(Reserva reserva) {
+        return reservas.remove(reserva);
+    }
+
+    public List<Reserva> obtenerReservasPorNumeroHabitacion(int numeroHabitacion) {
+        List<Reserva> resultado = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.getHabitacion().getNumero() == numeroHabitacion) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
+    }
+
+
+    //ToString
+    @Override
+    public String getDescripcion() {
+        return "Huésped: " + nombre + " " + apellido + " - DNI: " + dni;
+    }
+
+
+}
+
+
