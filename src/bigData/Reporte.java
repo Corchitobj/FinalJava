@@ -13,7 +13,7 @@ import java.util.Map;
 
 import hotel.TipoHabitacion;
 
-public class AnalisisReservasPorMes {
+public class Reporte {
 
     public static void main(String[] args) {
 
