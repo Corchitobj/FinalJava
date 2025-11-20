@@ -10,21 +10,21 @@ public class Hotel {
     private String direccion;
     private int estrellas;
 
-    private List<Habitacion> habitaciones = new ArrayList<>();
-    private List<Reserva> reservas = new ArrayList<>();
-    private List<Empleado> empleados = new ArrayList<>();
+    private final List<Habitacion> habitaciones = new ArrayList<>();
+    private final List<Reserva> reservas = new ArrayList<>();
+    private final List<Empleado> empleados = new ArrayList<>();
 
-    // 🔒 Singleton: única instancia
+    // Singleton: única instancia
     private static Hotel instanciaUnica = null;
 
-    // 🔒 Constructor privado
+    // Constructor privado
     private Hotel(String nombre, String direccion, int estrellas) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.estrellas = estrellas;
     }
 
-    // ✅ Método estático para obtener la instancia única
+    // Método estático para obtener la instancia única
     public static Hotel getInstancia(String nombre, String direccion, int estrellas) {
         if (instanciaUnica == null) {
             instanciaUnica = new Hotel(nombre, direccion, estrellas);
@@ -32,11 +32,20 @@ public class Hotel {
         return instanciaUnica;
     }
 
-    // ✅ Método para obtener la instancia sin parámetros (una vez creada)
+    // Método para obtener la instancia sin parámetros (una vez creada)
     public static Hotel getInstancia() {
         return instanciaUnica;
     }
 
+    public static void destruirInstancia() {
+        if (instanciaUnica != null) {
+        instanciaUnica.habitaciones.clear();
+        instanciaUnica.reservas.clear();
+        instanciaUnica.empleados.clear();
+        instanciaUnica = null;
+        }
+    }
+    
     // ===============================
     // Getters y setters básicos
     // ===============================
