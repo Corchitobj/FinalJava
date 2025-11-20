@@ -65,13 +65,10 @@ public class App {
             System.out.println("Reserva creada para " + reserva.getHuesped().getNombre() +
                     " en habitación " + reserva.getHabitacion().getNumero());
 
-            System.out.println("\n=== Notificación de disponibilidad tras reserva ===");
-            int habitacionesDisponibles = hotel.getHabitaciones().size() - hotel.getReservas().size();
-            System.out.println("Habitaciones disponibles después de la reserva: " + habitacionesDisponibles);
-
-            System.out.println("\n=== Huésped puntúa hotel ===");
+            System.out.println("\n=== Finalizar reserva: liberar y puntuar habitación ===");
             int puntuacion = 5;
-            System.out.println("Huésped " + huespedes.get(0).getNombre() + " puntúa el hotel con " + puntuacion + " estrellas.");
+            reserva.finalizarReserva(puntuacion);
+            reserva.mostrarResumen();
 
             System.out.println("\n=== Demostración del patrón Observer ===");
             GestorReservas gestor = new GestorReservas();

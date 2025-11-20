@@ -2,6 +2,8 @@ package bigData;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class GenerarArchivoReservas {
@@ -10,23 +12,25 @@ public class GenerarArchivoReservas {
         String rutaCsv = "reservas.csv";
 
         String[] tiposHabitacion = { "SENCILLA", "DOBLE", "SUITE" };
-        String[] nombres = { "Juan", "Ana", "Carlos", "Lucia", "Pedro", "Sofia", "Diego", "Laura", "Marcos",
-                "Valentina" };
-        String[] apellidos = { "Perez", "Gomez", "Lopez", "Diaz", "Fernandez", "Torres", "Ruiz", "Sosa", "Mendez",
-                "Herrera" };
+        String[] nombres = { "Juan", "Ana", "Carlos", "Lucia", "Pedro", "Sofia", "Diego", "Laura", "Marcos", "Valentina" };
+        String[] apellidos = { "Perez", "Gomez", "Lopez", "Diaz", "Fernandez", "Torres", "Ruiz", "Sosa", "Mendez", "Herrera" };
         Random random = new Random();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Rango de fechas: 1 de enero a 31 de diciembre de 2025
+        LocalDate inicio = LocalDate.of(2025, 1, 1);
+        int diasDelAño = inicio.lengthOfYear();
 
         try (
-                FileWriter writerTxt = new FileWriter(rutaTxt);
-                FileWriter writerCsv = new FileWriter(rutaCsv)) {
-            // Encabezado CSV
+            FileWriter writerTxt = new FileWriter(rutaTxt);
+            FileWriter writerCsv = new FileWriter(rutaCsv)
+        ) {
             writerCsv.write("Fecha,NumeroReserva,Huesped,TipoHabitacion,Empleado,Noches,Total,Calidad\n");
 
             for (int i = 1; i <= 5000; i++) {
-                // Fecha aleatoria
-                int mes = 1 + random.nextInt(12);
-                int dia = 1 + random.nextInt(28);
-                String fecha = String.format("2025-%02d-%02d", mes, dia);
+                // Fecha aleatoria dentro de 2025
+                LocalDate fecha = inicio.plusDays(random.nextInt(diasDelAño));
+                String fechaFormateada = fecha.format(formatter);
 
                 // Huesped
                 String nombre = nombres[random.nextInt(nombres.length)];
@@ -44,38 +48,22 @@ public class GenerarArchivoReservas {
                 int noches = 1 + random.nextInt(15);
 
                 // Precio por noche
-                int precioPorNoche = 0;
-                switch (tipo) {
-                    case "SENCILLA":
-                        precioPorNoche = 10000;
-                        break;
-                    case "DOBLE":
-                        precioPorNoche = 18000;
-                        break;
-                    case "SUITE":
-                        precioPorNoche = 30000;
-                        break;
-                    default:
-                        precioPorNoche = 0;
-                        break;
-                }
+                int precioPorNoche = switch (tipo) {
+                    case "SENCILLA" -> 10000;
+                    case "DOBLE" -> 18000;
+                    case "SUITE" -> 30000;
+                    default -> 0;
+                };
 
                 int total = precioPorNoche * noches;
 
-                // Calidad según total
-                String calidad;
-                if (total < 100000)
-                    calidad = "BAJA";
-                else if (total < 200000)
-                    calidad = "MEDIA";
-                else
-                    calidad = "ALTA";
+                // Calidad
+                String calidad = (total < 100000) ? "BAJA" : (total < 200000) ? "MEDIA" : "ALTA";
 
-                // Línea común
-                String linea = fecha + ", " + numeroReserva + ", " + huesped + ", " + tipo + ", Miguel Torcuato, "
+                // Línea
+                String linea = fechaFormateada + ", " + numeroReserva + ", " + huesped + ", " + tipo + ", Miguel Torcuato, "
                         + noches + ", " + total + ", " + calidad + "\n";
 
-                // Escribir en ambos archivos
                 writerTxt.write(linea);
                 writerCsv.write(linea);
             }
@@ -86,5 +74,4 @@ public class GenerarArchivoReservas {
             System.out.println("Error al generar los archivos: " + e.getMessage());
         }
     }
-
 }
