@@ -28,8 +28,8 @@ public class Reserva {
 
     // Finalizar reserva: libera habitación y registra puntuación
     public void finalizarReserva(int puntuacion) {
-        habitacion.liberar();
-        habitacion.puntuar(puntuacion);
+        habitacion.liberarHabitacion();
+        habitacion.puntuarHabitacion(puntuacion);
         System.out.println("Reserva finalizada. Habitación liberada y puntuada con " + puntuacion + " estrellas.");
     }
 

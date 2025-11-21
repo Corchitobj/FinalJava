@@ -61,7 +61,7 @@ public class Habitacion {
 
     // Métodos para puntuar habitación
 
-    public void puntuar(int estrellas) {
+    public void puntuarHabitacion(int estrellas) {
         if (estrellas < 1 || estrellas > 5) {
         throw new IllegalArgumentException("La puntuación debe estar entre 1 y 5 estrellas.");
         }
@@ -76,13 +76,13 @@ public class Habitacion {
 
     // Método para liberar habitación
 
-    public void liberar() {
+    public void liberarHabitacion() {
         disponible = true;
     }
 
     // Método para ocupar habitación
 
-    public void ocupar() {
+    public void ocuparHabitacion() {
         if (!disponible) {
         throw new IllegalStateException("La habitación ya está ocupada.");
         }
