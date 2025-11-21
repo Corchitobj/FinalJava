@@ -4,13 +4,13 @@ import persona.Empleado;
 import persona.Huesped;
 
 public class HotelFacade {
-    private Hotel hotel;
+    private final Hotel hotel;
 
     public HotelFacade(String nombre, String direccion, int estrellas) {
         this.hotel = Hotel.getInstancia(nombre, direccion, estrellas); // Singleton
     }
 
-    // ✅ Agregar habitación usando Builder
+    // Agregar habitación usando Builder
     public void agregarHabitacion(int numero, String tipo, double precio) {
         Habitacion h = new Habitacion.Builder()
             .conNumero(numero)
@@ -20,13 +20,13 @@ public class HotelFacade {
         hotel.agregarHabitacion(h);
     }
 
-    // ✅ Agregar empleado
+    // Agregar empleado
     public void agregarEmpleado(String nombre, String apellido, String dni, String cargo, double salario) {
         Empleado e = new Empleado(nombre, apellido, dni, cargo, salario);
         hotel.agregarEmpleado(e);
     }
 
-    // ✅ Registrar reserva
+    // Registrar reserva
     public void registrarReserva(String nombreHuesped, String apellido, String dniHuesped, int numeroHabitacion, String dniEmpleado) {
         Huesped huesped = new Huesped(nombreHuesped, apellido, dniHuesped);
         Habitacion habitacion = hotel.obtenerHabitacion(numeroHabitacion);
@@ -40,7 +40,7 @@ public class HotelFacade {
         }
     }
 
-    // ✅ Mostrar estado general del hotel
+    // Mostrar estado general del hotel
     public void mostrarEstadoHotel() {
         hotel.mostrarDatos();
 

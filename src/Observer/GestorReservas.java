@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorReservas {
-    private List<ReservaObserver> observadores = new ArrayList<>();
-    private List<UltimaDisponibilidadObserver> observadoresUltima = new ArrayList<>();
+    private final List<ReservaObserver> observadores = new ArrayList<>();
+    private final List<UltimaDisponibilidadObserver> observadoresUltima = new ArrayList<>();
     private int habitacionesDisponibles = 10;
 
     public void agregarObserver(ReservaObserver o) {
