@@ -1,4 +1,7 @@
 package hotel;
+
+import persona.Huesped;
+
 public class Habitacion {
     private int numero;
     private String tipo;
@@ -6,6 +9,7 @@ public class Habitacion {
     private int totalPuntuaciones = 0;
     private int cantidadPuntuaciones = 0;
     private boolean disponible = true;
+    private Huesped huespedActual; // huésped alojado
 
     // Constructor privado: solo accesible desde el Builder
     private Habitacion(Builder builder) {
@@ -19,16 +23,20 @@ public class Habitacion {
     public String getTipo() { return tipo; }
     public double getPrecioPorNoche() { return precioPorNoche; }
     public boolean estaDisponible() { return disponible; }
+    public Huesped getHuespedActual() { return huespedActual; }
 
-    // Setters opcionales (si querés permitir cambios post-construcción)
+    // Setters opcionales
     public void setNumero(int numero) { this.numero = numero; }
     public void setTipo(String tipo) { this.tipo = tipo; }
     public void setPrecioPorNoche(double precioPorNoche) { this.precioPorNoche = precioPorNoche; }
 
-
-    //Alta cohesión: método para mostrar datos de la habitación
+    // Alta cohesión: mostrar datos
     public void mostrarDatos() {
-        System.out.println("Habitación Nº " + numero + " | Tipo: " + tipo + " | Precio: $" + precioPorNoche);
+        System.out.println("Habitación Nº " + numero +
+                " | Tipo: " + tipo +
+                " | Precio: $" + precioPorNoche +
+                " | Disponible: " + disponible +
+                (huespedActual != null ? " | Ocupada por: " + huespedActual.getNombre() : ""));
     }
 
     // ===============================
@@ -39,34 +47,26 @@ public class Habitacion {
         private String tipo;
         private double precioPorNoche;
 
-        public Builder conNumero(int numero) {
-            this.numero = numero;
-            return this;
-        }
+        public Builder conNumero(int numero) { this.numero = numero; return this; }
+        public Builder conTipo(String tipo) { this.tipo = tipo; return this; }
+        public Builder conPrecioPorNoche(double precioPorNoche) { this.precioPorNoche = precioPorNoche; return this; }
 
-        public Builder conTipo(String tipo) {
-            this.tipo = tipo;
-            return this;
-        }
-
-        public Builder conPrecioPorNoche(double precioPorNoche) {
-            this.precioPorNoche = precioPorNoche;
-            return this;
-        }
-
-        public Habitacion build() {
-            return new Habitacion(this);
-        }
+        public Habitacion build() { return new Habitacion(this); }
     }
 
     // Métodos para puntuar habitación
-
-    public void puntuarHabitacion(int estrellas) {
-        if (estrellas < 1 || estrellas > 5) {
-        throw new IllegalArgumentException("La puntuación debe estar entre 1 y 5 estrellas.");
+    public void puntuarHabitacion(int puntaje) {
+        if (puntaje < 1 || puntaje > 5) {
+            throw new IllegalArgumentException("El puntaje debe estar entre 1 y 5 estrellas.");
         }
-        totalPuntuaciones += estrellas;
+        totalPuntuaciones += puntaje;
         cantidadPuntuaciones++;
+
+        System.out.println("[OK] Puntuación registrada:");
+        System.out.println(" - Habitación Nº " + numero);
+        System.out.println(" - Tipo: " + tipo);
+        System.out.println(" - Puntaje asignado: " + puntaje + " estrellas");
+        System.out.println(" - Promedio actual: " + getPromedioPuntuacion() + " estrellas");
     }
 
     public double getPromedioPuntuacion() {
@@ -74,19 +74,27 @@ public class Habitacion {
         return (double) totalPuntuaciones / cantidadPuntuaciones;
     }
 
-    // Método para liberar habitación
-
-    public void liberarHabitacion() {
-        disponible = true;
-    }
-
-    // Método para ocupar habitación
-
-    public void ocuparHabitacion() {
+    // Método para asignar huésped
+    public void asignarHuesped(Huesped huesped) {
         if (!disponible) {
-        throw new IllegalStateException("La habitación ya está ocupada.");
+            throw new IllegalStateException("La habitación ya está ocupada.");
         }
-        disponible = false;
+        this.huespedActual = huesped;
+        this.disponible = false;
     }
 
+    // Método para liberar habitación
+    public void liberarHabitacion() {
+        this.huespedActual = null;
+        this.disponible = true;
+    }
+
+    @Override
+    public String toString() {
+        return "Habitación Nº " + numero +
+               " | Tipo: " + tipo +
+               " | Precio: $" + precioPorNoche +
+               " | Disponible: " + disponible +
+               (huespedActual != null ? " | Ocupada por: " + huespedActual.getNombre() : "");
+    }
 }

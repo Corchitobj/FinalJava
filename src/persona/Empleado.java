@@ -18,8 +18,14 @@ public class Empleado extends Persona {
 
     @Override
     public String getDescripcion() {
-        return "Empleado: " + nombre + " " + apellido + " - Cargo: " + cargo;
+        return "Empleado: " + getNombre() + " " + getApellido() +
+               " - Cargo: " + cargo +
+               " - Salario: $" + salario;
     }
 
-
+    @Override
+    public String toString() {
+        return getNombre() + " " + getApellido() +
+               " (Cargo: " + cargo + ", Salario: $" + salario + ")";
+    }
 }

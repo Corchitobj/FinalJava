@@ -15,10 +15,11 @@ public class Huesped extends Persona {
     public List<Reserva> getReservas() { return reservas; }
     public void setReservas(List<Reserva> reservas) { this.reservas = reservas; }
 
-
     // Métodos para gestionar reservas
     public void agregarReserva(Reserva reserva) {
-        reservas.add(reserva);
+        if (reserva != null && !reservas.contains(reserva)) {
+            reservas.add(reserva);
+        }
     }
 
     public boolean eliminarReserva(Reserva reserva) {
@@ -35,14 +36,16 @@ public class Huesped extends Persona {
         return resultado;
     }
 
-
-    //ToString
+    // Descripción legible
     @Override
     public String getDescripcion() {
-        return "Huésped: " + nombre + " " + apellido + " - DNI: " + dni;
+        return "Huésped: " + getNombre() + " " + getApellido() +
+               " - DNI: " + getDni() +
+               " - Reservas activas: " + reservas.size();
     }
 
-
+    @Override
+    public String toString() {
+        return getDescripcion();
+    }
 }
-
-

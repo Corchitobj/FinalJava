@@ -1,0 +1,35 @@
+✅ Modelo de ciclo de vida elegido: Incremental
+El modelo incremental es el más adecuado para este proyecto porque:
+• 	Entrega por etapas: permite construir el sistema en bloques funcionales (habitaciones, reservas, empleados, Observer), cada uno usable y mejorable.
+• 	Retroalimentación continua: cada entrega parcial fue revisada por tu profesor, y se pudieron aplicar correcciones sin rehacer todo el sistema.
+• 	Flexibilidad: se adaptó a cambios y mejoras (encapsulación del huésped, validación de disponibilidad, implementación del patrón Observer).
+• 	Menor riesgo: al tener versiones funcionales en cada iteración, se asegura que el proyecto siempre tenga un avance tangible.
+
+
+✅ Fases del ciclo de vida en las que se participó
+En este proyecto se trabajó en varias fases del ciclo de vida del software:
+
+1.Análisis de requisitos
+a-Identificación de las funcionalidades necesarias: gestión de habitaciones, reservas, empleados, notificaciones de disponibilidad.
+b-Revisión de observaciones del profesor como parte del refinamiento de requisitos.
+
+2.Diseño
+-Uso de patrones de diseño (Builder, Singleton, Observer).
+-Diagramas UML de clases y secuencia para representar la arquitectura y dinámica del sistema.
+
+3.Implementación / Codificación
+-Desarrollo de las clases principales (, , , ).
+-Correcciones aplicadas en base a feedback (encapsulación, validación).
+-Implementación del patrón Observer con sus interfaces y observadores concretos.
+
+4.Pruebas
+-Ejecución de casos en  para verificar reservas exitosas y fallidas.
+-Pruebas de notificación de observadores (cantidad de habitaciones y última disponibilidad).
+
+5.Mantenimiento / Mejora
+-Incorporación de correcciones solicitadas por el profesor.
+-Ajustes en mensajes y validaciones para mejorar la salida del sistema.
+
+🎯 Conclusión
+-El modelo Incremental fue el más adecuado porque permitió avanzar por etapas, recibir feedback y mejorar continuamente.
+-Se participó en las fases de análisis, diseño, implementación, pruebas y mantenimiento, lo que demuestra un ciclo de vida completo aplicado al proyecto.

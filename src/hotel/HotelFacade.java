@@ -10,6 +10,10 @@ public class HotelFacade {
         this.hotel = Hotel.getInstancia(nombre, direccion, estrellas); // Singleton
     }
 
+    public Hotel getHotel() {
+        return hotel;
+    }
+
     // Agregar habitación usando Builder
     public void agregarHabitacion(int numero, String tipo, double precio) {
         Habitacion h = new Habitacion.Builder()
@@ -18,48 +22,49 @@ public class HotelFacade {
             .conPrecioPorNoche(precio)
             .build();
         hotel.agregarHabitacion(h);
+        System.out.println("[OK] Habitación Nº " + numero + " agregada (Tipo: " + tipo + ", Precio: $" + precio + ")");
     }
 
     // Agregar empleado
     public void agregarEmpleado(String nombre, String apellido, String dni, String cargo, double salario) {
         Empleado e = new Empleado(nombre, apellido, dni, cargo, salario);
         hotel.agregarEmpleado(e);
+        System.out.println("[OK] Empleado dado de alta: " + e);
     }
 
-    // Registrar reserva
-    public void registrarReserva(String nombreHuesped, String apellido, String dniHuesped, int numeroHabitacion, String dniEmpleado) {
-        Huesped huesped = new Huesped(nombreHuesped, apellido, dniHuesped);
-        Habitacion habitacion = hotel.obtenerHabitacion(numeroHabitacion);
-        Empleado empleado = hotel.obtenerEmpleadoPorDNI(dniEmpleado);
+    // Alta de huésped
+    public void agregarHuesped(String nombre, String apellido, String dni) {
+        Huesped h = new Huesped(nombre, apellido, dni);
+        hotel.agregarHuesped(h);
+        System.out.println("[OK] Huésped dado de alta: " + h);
+    }
 
-        if (habitacion != null && empleado != null) {
+    // Registrar reserva con validación de disponibilidad
+    public void registrarReserva(String nombre, String apellido, String dni, int numeroHabitacion, String dniEmpleado) {
+        Huesped huesped = hotel.buscarHuesped(dni);
+        Habitacion habitacion = hotel.obtenerHabitacion(numeroHabitacion);
+        Empleado empleado = hotel.obtenerEmpleadoPorDNI(dniEmpleado); // 🔹 corregido
+
+        if (huesped == null || habitacion == null || empleado == null) {
+            System.out.println("[ERROR] Datos inválidos para la reserva.");
+            return;
+        }
+
+        try {
             Reserva reserva = new Reserva(huesped, habitacion, empleado);
             hotel.agregarReserva(reserva);
-        } else {
-            System.out.println("Error: habitación o empleado no encontrados.");
+
+            System.out.println("[OK] Reserva registrada:");
+            System.out.println(" - Huésped: " + huesped);
+            System.out.println(" - Habitación: " + habitacion);
+            System.out.println(" - Empleado que registró: " + empleado);
+        } catch (IllegalStateException e) {
+            System.out.println("[ERROR] " + e.getMessage());
         }
     }
 
     // Mostrar estado general del hotel
     public void mostrarEstadoHotel() {
-        hotel.mostrarDatos();
-
-        System.out.println("\nHabitaciones:");
-        for (Habitacion h : hotel.getHabitaciones()) {
-            h.mostrarDatos();
-        }
-
-        System.out.println("\nEmpleados:");
-        for (Empleado e : hotel.getEmpleados()) {
-            System.out.println(" - " + e.getDescripcion());
-        }
-
-        System.out.println("\nReservas:");
-        for (Reserva r : hotel.getReservas()) {
-            System.out.println(" - Huésped: " + r.getHuesped().getNombre() +
-                               " | Habitación Nº " + r.getHabitacion().getNumero() +
-                               " | Gestionada por: " + r.getEmpleadoRecepcion().getNombre());
-        }
+        hotel.mostrarEstadoHotel(); // 🔹 ya imprime habitaciones, empleados, huéspedes y reservas
     }
-
 }
