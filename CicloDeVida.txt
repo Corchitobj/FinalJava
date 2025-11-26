@@ -14,11 +14,11 @@ a-Identificación de las funcionalidades necesarias: gestión de habitaciones, r
 b-Revisión de observaciones del profesor como parte del refinamiento de requisitos.
 
 2.Diseño
--Uso de patrones de diseño (Builder, Singleton, Observer).
+-Uso de patrones de diseño (Builder, Facade ,Singleton, Observer).
 -Diagramas UML de clases y secuencia para representar la arquitectura y dinámica del sistema.
 
 3.Implementación / Codificación
--Desarrollo de las clases principales (, , , ).
+-Desarrollo de las clases principales 
 -Correcciones aplicadas en base a feedback (encapsulación, validación).
 -Implementación del patrón Observer con sus interfaces y observadores concretos.
 

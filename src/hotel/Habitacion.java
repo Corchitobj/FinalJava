@@ -4,7 +4,7 @@ import persona.Huesped;
 
 public class Habitacion {
     private int numero;
-    private String tipo;
+    private TipoHabitacion tipo;
     private double precioPorNoche;
     private int totalPuntuaciones = 0;
     private int cantidadPuntuaciones = 0;
@@ -20,14 +20,14 @@ public class Habitacion {
 
     // Getters
     public int getNumero() { return numero; }
-    public String getTipo() { return tipo; }
+    public TipoHabitacion getTipo() { return tipo; }
     public double getPrecioPorNoche() { return precioPorNoche; }
     public boolean estaDisponible() { return disponible; }
     public Huesped getHuespedActual() { return huespedActual; }
 
     // Setters opcionales
     public void setNumero(int numero) { this.numero = numero; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public void setTipo(TipoHabitacion tipo) { this.tipo = tipo; }
     public void setPrecioPorNoche(double precioPorNoche) { this.precioPorNoche = precioPorNoche; }
 
     // Alta cohesión: mostrar datos
@@ -44,11 +44,11 @@ public class Habitacion {
     // ===============================
     public static class Builder {
         private int numero;
-        private String tipo;
+        private TipoHabitacion tipo;
         private double precioPorNoche;
 
         public Builder conNumero(int numero) { this.numero = numero; return this; }
-        public Builder conTipo(String tipo) { this.tipo = tipo; return this; }
+        public Builder conTipo(TipoHabitacion tipo) { this.tipo = tipo; return this; }
         public Builder conPrecioPorNoche(double precioPorNoche) { this.precioPorNoche = precioPorNoche; return this; }
 
         public Habitacion build() { return new Habitacion(this); }

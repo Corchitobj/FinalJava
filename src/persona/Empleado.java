@@ -4,7 +4,7 @@ public class Empleado extends Persona {
     private String cargo;
     private double salario;
 
-    public Empleado(String nombre, String apellido, String dni, String cargo, double salario) {
+    public Empleado(String nombre, String apellido, double dni, String cargo, double salario) {
         super(nombre, apellido, dni);
         this.cargo = cargo;
         this.salario = salario;

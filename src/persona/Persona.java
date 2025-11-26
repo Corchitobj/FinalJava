@@ -4,9 +4,9 @@ public abstract class Persona {
     //SUBO REPO 
     protected String nombre;
     protected String apellido;
-    protected String dni;
+    protected double dni;
 
-    public Persona(String nombre, String apellido, String dni) {
+    public Persona(String nombre, String apellido, double dni) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -18,8 +18,8 @@ public abstract class Persona {
     public String getApellido() { return apellido; }
     public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public String getDni() { return dni; }
-    public void setDni(String dni) { this.dni = dni; }
+    public double getDni() { return dni; }
+    public void setDni(double dni) { this.dni = dni; }
 
     public abstract String getDescripcion();
 }

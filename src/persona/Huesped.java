@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Huesped extends Persona {
     private List<Reserva> reservas = new ArrayList<>();
 
-    public Huesped(String nombre, String apellido, String dni) {
+    public Huesped(String nombre, String apellido, double dni) {
         super(nombre, apellido, dni);
     }
     

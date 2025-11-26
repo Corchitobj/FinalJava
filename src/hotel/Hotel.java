@@ -32,14 +32,16 @@ public class Hotel {
         return instanciaUnica;
     }
 
-    public static Hotel getInstancia() { return instanciaUnica; }
+    public static Hotel getInstancia() { 
+        return instanciaUnica; 
+    }
 
     public static void destruirInstancia() {
         if (instanciaUnica != null) {
             instanciaUnica.habitaciones.clear();
             instanciaUnica.reservas.clear();
             instanciaUnica.empleados.clear();
-            instanciaUnica.huespedes.clear(); // 🔹 limpiar huéspedes también
+            instanciaUnica.huespedes.clear();
             instanciaUnica = null;
         }
     }
@@ -68,9 +70,9 @@ public class Hotel {
         return null;
     }
 
-    public Habitacion buscarHabitacionDisponible(String tipo) {
+    public Habitacion buscarHabitacionDisponible(TipoHabitacion tipo) {
         for (Habitacion h : habitaciones) {
-            if (h.getTipo().equalsIgnoreCase(tipo) && h.estaDisponible()) {
+            if (h.getTipo() == tipo && h.estaDisponible()) {
                 return h;
             }
         }
@@ -99,9 +101,9 @@ public class Hotel {
         }
     }
 
-    public Empleado obtenerEmpleadoPorDNI(String dni) {
+    public Empleado obtenerEmpleadoPorDNI(double dni) {
         for (Empleado e : empleados) {
-            if (e.getDni().equals(dni)) return e;
+            if (e.getDni() == dni) return e;
         }
         return null;
     }
@@ -117,9 +119,9 @@ public class Hotel {
         }
     }
 
-    public Huesped buscarHuesped(String dni) {
+    public Huesped buscarHuesped(double dni) {
         for (Huesped h : huespedes) {
-            if (h.getDni().equals(dni)) return h;
+            if (h.getDni() == dni) return h;
         }
         return null;
     }
