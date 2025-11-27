@@ -2,6 +2,8 @@ import hotel.HotelFacade;
 import hotel.Hotel;
 import hotel.Reserva;
 import hotel.TipoHabitacion;
+import persona.Huesped;
+import Observer.*;
 
 public class MainTesting {
     public static void main(String[] args) {
@@ -14,16 +16,15 @@ public class MainTesting {
         System.out.println("\n[a] Alta de hotel, habitaciones, huéspedes y empleados (PRE)");
 
         HotelFacade facade = new HotelFacade(
-                "Hotel Istic",
+                "Hotel Copilot",
                 "Av. Siempre Viva 123",
                 4
         );
 
         // Alta de habitaciones
-        facade.agregarHabitacion(101, TipoHabitacion.SENCILLA  , 1500);
-        facade.agregarHabitacion(102, TipoHabitacion.DOBLE     , 2500);
-        facade.agregarHabitacion(201, TipoHabitacion.SUITE     , 4000);
-
+        facade.agregarHabitacion(101, TipoHabitacion.SENCILLA, 1500);
+        facade.agregarHabitacion(102, TipoHabitacion.DOBLE, 2500);
+        facade.agregarHabitacion(201, TipoHabitacion.SUITE, 4000);
 
         // Alta de huéspedes
         facade.agregarHuesped("Ignacio", "García", 101);
@@ -37,39 +38,50 @@ public class MainTesting {
         facade.agregarEmpleado("Lucía", "Gómez", 2, "Gerente", 80000);
 
         System.out.println("[a] Alta completada (POST)");
-
-        // Mostrar estado actual
         facade.mostrarEstadoHotel();
 
         // ---------------------------------------------------------
         // b) Suscripción de huéspedes a notificación de disponibilidad
         // ---------------------------------------------------------
         System.out.println("\n[b] Suscripción de huéspedes a notificación de disponibilidad (PRE)");
+        for (Huesped h : facade.getHotel().getHuespedes()) {
+            System.out.println(" - " + h.getDescripcion() + " - Suscripto: " + h.isSuscripto());
+        }
 
-        // *Aquí iría la lógica del Observer si estuviera implementada*
+        // Simular suscripción
+        for (Huesped h : facade.getHotel().getHuespedes()) {
+            h.setSuscripto(true);
+        }
+
         System.out.println("[b] Suscripción completada (POST)");
+        for (Huesped h : facade.getHotel().getHuespedes()) {
+            System.out.println(" - " + h.getDescripcion() + " - Suscripto: " + h.isSuscripto());
+        }
 
         // ---------------------------------------------------------
-        // c) Generar una reserva
+        // c) Generar una reserva con Observer
         // ---------------------------------------------------------
         System.out.println("\n[c] Generación de reserva (PRE)");
+        if (facade.getHotel().getReservas().isEmpty()) {
+            System.out.println("No hay reservas.");
+        }
 
-        // Reserva realizada completamente a través de la fachada
-        facade.registrarReserva(
-                101,    // DNI del huésped
-                101,    // Número de habitación
-                1,      // DNI del empleado
-                3       // Noches
-        );
+        // Registrar reserva en el hotel
+        facade.registrarReserva(101, 101, 1, 3);
 
-        System.out.println("[c] Reserva generada (POST)");
+        // Notificar a través del Observer
+        GestorReservas gestor = new GestorReservas();
+        gestor.agregarObserver(new PanelRecepcion());
+        gestor.agregarUltimaDisponibilidadObserver(new AlertaUltimaHabitacion());
+        gestor.crearReserva();
+
+        System.out.println("[c] Reserva registrada (POST)");
+        facade.getHotel().getReservas().forEach(r -> System.out.println(r));
 
         // ---------------------------------------------------------
         // d) Huésped puntúa el hotel
         // ---------------------------------------------------------
         System.out.println("\n[d] Puntuación de hotel (PRE)");
-
-        // Para evitar acceder directamente a listas internas del hotel:
         Reserva primeraReserva = facade.getHotel().getReservas().stream().findFirst().orElse(null);
 
         if (primeraReserva != null) {
@@ -83,6 +95,7 @@ public class MainTesting {
         // e) Destruir hotel con manejo de errores
         // ---------------------------------------------------------
         System.out.println("\n[e] Destrucción de hotel (PRE)");
+        facade.mostrarEstadoHotel();
 
         try {
             Hotel.destruirInstancia();
@@ -93,7 +106,11 @@ public class MainTesting {
 
         // Verificación final
         if (Hotel.getInstancia() == null) {
-            System.out.println("[e] Verificación: instancia eliminada.");
+            System.out.println("Hotel: No existe hotel.");
+            System.out.println("Habitaciones: No hay habitaciones.");
+            System.out.println("Empleados: No hay empleados.");
+            System.out.println("Huéspedes: No hay huéspedes.");
+            System.out.println("Reservas: No hay reservas.");
         } else {
             System.out.println("[e] Verificación: instancia aún existe.");
         }

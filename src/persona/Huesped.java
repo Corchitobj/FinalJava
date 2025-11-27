@@ -10,6 +10,11 @@ public class Huesped extends Persona {
     public Huesped(String nombre, String apellido, double dni) {
         super(nombre, apellido, dni);
     }
+
+    private boolean suscripto = false;
+
+    public boolean isSuscripto() { return suscripto; }
+    public void setSuscripto(boolean suscripto) { this.suscripto = suscripto; }
     
     // Getters y Setters
     public List<Reserva> getReservas() { return reservas; }
