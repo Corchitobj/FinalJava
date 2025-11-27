@@ -1,9 +1,9 @@
-import hotel.HotelFacade;
+import Observer.*;
 import hotel.Hotel;
+import hotel.HotelFacade;
 import hotel.Reserva;
 import hotel.TipoHabitacion;
 import persona.Huesped;
-import Observer.*;
 
 public class MainTesting {
     public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class MainTesting {
         System.out.println("\n[a] Alta de hotel, habitaciones, huéspedes y empleados (PRE)");
 
         HotelFacade facade = new HotelFacade(
-                "Hotel Copilot",
+                "Hotel Istic",
                 "Av. Siempre Viva 123",
                 4
         );
